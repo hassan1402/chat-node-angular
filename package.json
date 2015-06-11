@@ -1,0 +1,17 @@
+{
+  "name": "chat",
+  "version": "0.0.1",
+  "description": "this an application chat for node js",
+  "main": "server.js",
+  "scripts": {
+    "test": "chat-server",
+    "start": "node server.js"
+  },
+"dependencies": {
+    "express": "*",
+    "socket.io": "*",
+    "redis": "*"
+  },
+  "author": "hassan@copyright",
+  "license": "LICENCE"
+}
