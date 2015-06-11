@@ -19,11 +19,11 @@ io.on('connect', function(socket){
 		console.log( socket.name + ' has disconnected from the chat.' + socket.id);
     });
     socket.on('join', function (data) {
-        socket.name = data.from;
+        socket.name = data.name;
         console.log(socket.name + ' joined the chat.');
     });
     socket.on('message', function(data){
-		var message = {from: data.from, message: data.message, time: new Date()}
+		var message = {name: data.name, message: data.message, time: new Date()};
 		console.log('MESSAGE Received : '+JSON.stringify(message));
         socket.emit('Ack_message', 'message received');
 		socket.emit('message', message);

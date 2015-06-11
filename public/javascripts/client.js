@@ -3,19 +3,21 @@ var app = angular.module('myApp', []);
 app.controller('personCtrl', function($scope) {
 	$scope.username = "toto";
 	$scope.email = "toto@gmail.com";	
-	$scope.messages = "";
+	$scope.messages = [];
+	$scope.numberMsg = 0;
 
     $scope.connect = function() {  
 		var socket = io.connect('http://localhost:8080',{'forceNew':true });
 		$scope.show = "connected"; 
-		var user = {from : $scope.username, email: $scope.email};		
+		var user = {name : $scope.username, email: $scope.email};		
 		socket.emit('join', user);  	
 
-		$scope.sendmessage = function() {        
-			var message = {from : $scope.username, message: $scope.inputmessages};
+		$scope.sendmessage = function() {			
+			var message = {name : $scope.username, message: $scope.inputmessages};
 			socket.emit('message', message);
 			console.log( 'SENT TO SERVER : '+JSON.stringify(message) );
-		} 
+			
+		}			
 	   
 		$scope.disconnect = function() {
 			$scope.show = "disconnected";
@@ -26,12 +28,13 @@ app.controller('personCtrl', function($scope) {
 			console.log('Status connection : sent');
 		}); 
 		
-		socket.on('message', function(data){	
-			$scope.user_name = "name";
-			$scope.user_message = $scope.messages+ 'From : '+data.from+' Message : '+data.message+' time : '+data.time;
-			console.log('FROM SERVER : '+JSON.stringify(data));
-			 $scope.chats.unshift({name:data.name, message:data.msg});
-			//socket.emit('message', 'received');
+		socket.on('message', function(data){
+			$scope.numberMsg++;
+			$scope.$apply(function () {			
+				$scope.messages.unshift(data);
+				console.log('FROM SERVER : '+JSON.stringify(data));
+				$scope.show = $scope.numberMsg+' message(s) received';
+			 });
 		});
 		
 		socket.on('Ack_connect', function(data){						
