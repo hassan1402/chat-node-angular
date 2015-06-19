@@ -7,7 +7,7 @@ app.controller('personCtrl', function($scope) {
 	$scope.numberMsg = 0;
 
     $scope.connect = function() {  
-		var socket = io.connect('http://localhost:8080',{'forceNew':true });
+		var socket = io.connect('http://localhost:8080/',{'forceNew':true });
 		$scope.show = "connected"; 
 		var user = {name : $scope.username, email: $scope.email};		
 		socket.emit('join', user);  	
@@ -23,6 +23,13 @@ app.controller('personCtrl', function($scope) {
 			$scope.show = "disconnected";
 			socket.disconnect();
 		}
+
+		$scope.sendimage = function() {
+			uploadImage();
+			$scope.show = "send image";
+			console.log( 'SENT IMAGE');
+		}
+
 
 		socket.on('connect', function(){			
 			console.log('Status connection : sent');

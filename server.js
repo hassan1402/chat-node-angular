@@ -1,19 +1,26 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
+var fs = require('fs');
+url = require('url');
 var io = require('socket.io')(http);
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
     res.sendfile('public/index.html');
 });
-app.get('javascripts/client.js', function(req, res){
-    res.sendfile('public/javascripts/client.js');
+
+app.get('/js/client.js', function(req, res){
+    res.sendfile('public/js/client.js');
+});
+
+app.get('js/img.png', function(req, res){
+    res.sendfile('public/img/client.js');
 });
 
 io.on('connect', function(socket){
     console.log('a user connected: ' + socket.id);
-	socket.emit('Ack_connect', 'Status connection : connected');
+    socket.emit('Ack_connect', 'Status connection : connected');
 	
     socket.on('disconnect', function(){
 		console.log( socket.name + ' has disconnected from the chat.' + socket.id);
