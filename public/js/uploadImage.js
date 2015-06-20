@@ -1,6 +1,6 @@
-var myApp = angular.module('myApp', []);
+var upload = angular.module('upload', []);
 
-myApp.directive('fileModel', ['$parse', function ($parse) {
+upload.directive('fileModel', ['$parse', function ($parse) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -16,7 +16,7 @@ myApp.directive('fileModel', ['$parse', function ($parse) {
     };
 }]);
 
-myApp.service('fileUpload', ['$http', function ($http) {
+upload.service('fileUpload', ['$http', function ($http) {
     this.uploadFileToUrl = function(file, uploadUrl){
         var fd = new FormData();
         fd.append('file', file);
